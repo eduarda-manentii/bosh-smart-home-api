@@ -6,7 +6,7 @@ import { EventsList } from './EventsList';
 import { useBoschSmartHome } from '@/hooks/useBoschSmartHome';
 import { 
   Home, 
-  Devices, 
+  Smartphone, 
   LogOut, 
   Activity,
   Loader2
@@ -51,6 +51,10 @@ export const Dashboard = () => {
     return deviceStates.find(state => state.deviceId === deviceId);
   };
 
+  const handleDeviceControl = (deviceId: string, serviceId: string, command: any) => {
+    controlDevice({ deviceId, serviceId, command });
+  };
+
   const devicesByRoom = getDevicesByRoom();
 
   return (
@@ -88,7 +92,7 @@ export const Dashboard = () => {
           {/* Dispositivos */}
           <div className="lg:col-span-2">
             <div className="flex items-center space-x-2 mb-6">
-              <Devices className="w-5 h-5 text-gray-600" />
+              <Smartphone className="w-5 h-5 text-gray-600" />
               <h2 className="text-lg font-semibold text-gray-900">Dispositivos</h2>
             </div>
 
@@ -110,7 +114,7 @@ export const Dashboard = () => {
                           key={device.id}
                           device={device}
                           deviceState={getDeviceState(device.id)}
-                          onControl={controlDevice}
+                          onControl={handleDeviceControl}
                           isControlling={isControlling}
                         />
                       ))}
